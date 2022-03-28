@@ -69,8 +69,11 @@ class GeneralizedKernelFisherLD(BaseEstimator, TransformerMixin):
         self.X_ = X
         self.y_ = y
 
+        print(np.newaxis)
         y_onehot = OneHotEncoder().fit_transform(
-            self.y_[:, np.newaxis])
+            np.transpose(self.y_))
+        
+        # self.y_[:, np.newaxis])
 
         K = pairwise_kernels(
             X, X, metric=self.kernel, **self.kwds)

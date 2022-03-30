@@ -15,11 +15,8 @@ import numpy as np
 class GeneralizedKernelFisherLD(BaseEstimator, TransformerMixin):
     """
     Generalized Kernel Fisher's Discriminant.
-
     Adds parameters alpha and beta which take values in [0,1].
-
     At alpha=beta=0, this reduces to standard kernel fisher's discriminant.
-
     At alpha=beta=1, this reduces to standard kernel PCA.
     """
 
@@ -28,7 +25,6 @@ class GeneralizedKernelFisherLD(BaseEstimator, TransformerMixin):
                  **kwds):
         """
         Initializes the Generalized Kernel Fisher's Discriminant Transformer.
-
         Args:
             n_components (int, optional): number of components of projection.
                 Defaults to 2.
@@ -55,11 +51,9 @@ class GeneralizedKernelFisherLD(BaseEstimator, TransformerMixin):
     def fit(self, X, y):
         """
         Finds the projections onto new feature space given by kernel.
-
         Args:
             X (np.ndarray): training data of shape (n_samples, n_features)
             y (List[int]): training labels of shape (n_samples,)
-
         Returns:
             self: fitted transformer.
         """
@@ -69,11 +63,8 @@ class GeneralizedKernelFisherLD(BaseEstimator, TransformerMixin):
         self.X_ = X
         self.y_ = y
 
-        print(np.newaxis)
         y_onehot = OneHotEncoder().fit_transform(
-            np.transpose(self.y_))
-        
-        # self.y_[:, np.newaxis])
+            self.y_[:, np.newaxis])
 
         K = pairwise_kernels(
             X, X, metric=self.kernel, **self.kwds)
@@ -97,10 +88,8 @@ class GeneralizedKernelFisherLD(BaseEstimator, TransformerMixin):
     def transform(self, X):
         """
         Transform X via the projection onto the feature space given by the kernel.
-
         Args:
             X (np.ndarray): training data of shape (n_samples, n_features)
-
         Returns:
             np.ndarray: transformed data.
         """
